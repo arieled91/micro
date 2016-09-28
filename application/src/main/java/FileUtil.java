@@ -6,16 +6,17 @@ import java.nio.file.Paths;
 
 public class FileUtil {
 
-    @NotNull public static char[] read(String path){
+    @NotNull public static String read(String path){
         try {
-            return new String(Files.readAllBytes(Paths.get(path))).toCharArray();
+            return new String(Files.readAllBytes(Paths.get(path)));
         } catch (IOException e) {
             System.err.println(String.format(FILE_NOT_FOUND,path));
+            System.exit(5);
         }
 
-        return "".toCharArray();
+        return "";
     }
 
-    private static final String FILE_NOT_FOUND = "No se encuentra el archivo \"%s\"";
+    private static final String FILE_NOT_FOUND = "Error de E/S o archivo no encontrado: \"%s\"";
 
 }
