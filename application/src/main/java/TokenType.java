@@ -15,7 +15,8 @@ public enum TokenType {
     ADD_OP("+", false),
     SUB_OP("-", false),
     LEXICAL_ERROR("", false),
-    EOF("", false);
+    EOF("", false),
+    OTHER("", false);
 
     private final String value;
     private boolean reservedWord;

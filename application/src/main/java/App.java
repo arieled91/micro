@@ -1,5 +1,7 @@
 public class App {
 
+    private App() {}
+
     public static void main(String... args) {
         if(args.length==0) {
             System.err.println(FILE_PATH_ERROR);
@@ -11,7 +13,7 @@ public class App {
             System.exit(7);
         }
 
-        String filePath = args[0];
+        final String filePath = args[0];
 
         if(!filePath.endsWith(".m")) {
             System.err.println(FILE_NAME_ERROR);
@@ -19,9 +21,9 @@ public class App {
         }
 
 
-        String micro = FileUtil.read(filePath);
-        Parser parser = new Parser(micro).run();
-        if(parser.isError()) System.exit(1);
+
+        final Parser parser = new Parser(filePath).run();
+        //if(parser.isError()) System.exit(1);
     }
 
     private static final String FILE_PATH_ERROR = "Debe ingresar la ruta de un archivo";

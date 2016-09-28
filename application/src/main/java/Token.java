@@ -1,6 +1,8 @@
 public class Token {
-    private TokenType tokenType;
-    private String value;
+    private TokenType tokenType = TokenType.OTHER;
+    private String value = "";
+
+    public Token() {}
 
     public Token(String value) {
         this.value = value;
@@ -10,12 +12,33 @@ public class Token {
         return tokenType;
     }
 
-    public Token withTokenType(TokenType tokenType) {
-        this.tokenType = tokenType;
+    public Token withType(TokenType type) {
+        tokenType = type;
         return this;
     }
 
     public String getValue() {
         return value;
     }
+
+
+    public void match(TokenType matchType){
+        if(getTokenType()!=matchType) {
+            syntacticError();
+            //exit?
+        }
+    }
+
+    public void syntacticError(){
+        System.err.println(String.format(SYNTACTIC_ERROR, getValue()));
+    }
+
+    public void lexicalError(){
+        System.err.println(String.format(LEXICAL_ERROR, getValue()));
+    }
+
+
+
+    private static final String SYNTACTIC_ERROR = "Error sintáctico: %s";
+    private static final String LEXICAL_ERROR = "Error léxico: %s";
 }

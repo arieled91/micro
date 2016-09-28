@@ -6,10 +6,12 @@ import java.nio.file.Paths;
 
 public class FileUtil {
 
+    private FileUtil() {}
+
     @NotNull public static String read(String path){
         try {
             return new String(Files.readAllBytes(Paths.get(path)));
-        } catch (IOException e) {
+        } catch (final IOException e) {
             System.err.println(String.format(FILE_NOT_FOUND,path));
             System.exit(5);
         }

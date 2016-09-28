@@ -1,1 +1,3 @@
-hola mundo
+begin
+read(a,b);
+end
