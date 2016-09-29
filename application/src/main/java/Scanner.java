@@ -2,17 +2,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 public class Scanner {
 
     NodeList<Character> chars;
     private final Map<String, TokenType> reservedWords = new HashMap<>();
-    private final List<Token> tokens = new LinkedList<>();
-    private final ListIterator<Token> tokensIterator = tokens.listIterator();
+    private final NodeList<Token> tokens = new NodeList<>();
 
     private final int[][] statusTable =
             {{ 1,  3,  5,  6,  7,  8,  9, 10, 11, 14, 13,  0, 14 },
@@ -32,10 +28,29 @@ public class Scanner {
             { 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14 }};
 
     public Scanner(String filePath) {
-        char[] fileChars = FileUtil.read(filePath).toCharArray();
-        chars = NodeList.fromCharArray(fileChars);
+        loadChars(filePath);
         loadReservedWords();
         buildTokens();
+        printResult();
+    }
+
+    private void loadChars(String filePath) {
+        char[] fileChars = FileUtil.read(filePath).toCharArray();
+        chars = NodeList.fromCharArray(fileChars);
+    }
+
+    private void printResult() {
+        int errorCounter = 0;
+        for (Token token : tokens.list()) {
+            if(token.getTokenType()==TokenType.LEXICAL_ERROR) {
+                token.lexicalError();
+                errorCounter++;
+            }
+        }
+
+        if(errorCounter==0) System.out.println(SCANNER_OK);
+        else System.err.println(String.format(SCANNER_ERROR, errorCounter));
+
     }
 
     private void loadReservedWords(){
@@ -46,13 +61,18 @@ public class Scanner {
     }
 
     @NotNull public Token next(){
-        if(tokensIterator.hasNext()) return tokensIterator.next();
-        else return new Token();
+        Token next = tokens.next();
+        return next != null ? next : new Token();
     }
 
     @NotNull public Token previous(){
-        if(tokensIterator.hasPrevious())return tokensIterator.previous();
-        else return new Token();
+        Token previous = tokens.previous();
+        return previous!=null ? previous : new Token();
+    }
+
+    @NotNull public Token get(){
+        Token get = tokens.get();
+        return get!=null ? get : new Token();
     }
 
     private void buildTokens(){
@@ -63,8 +83,8 @@ public class Scanner {
             Character character = chars.get();
             status = nextStatus(status, character);
             if(isFinalStatus(status)) {
-                if(status!=2 && status!=4)buffer+=character;
-                else chars.previous();
+                if(status==2 || status==4)chars.previous();
+                else buffer+=character;
                 tokens.add(buildToken(status, buffer));
                 buffer = "";
                 status = 0;
@@ -120,54 +140,6 @@ public class Scanner {
         return token;
     }
 
-
-
-
-    /*
-    @NotNull private Token buildTokens(){
-        String buffer = "";
-        int status = 0;
-
-
-        while(charsIterator.hasNext()){
-            final Character character = charsIterator.next();
-            final int nextStatus = nextStatus(status, character);
-            if(nextStatus==14) break;
-            status = nextStatus;
-            buffer+=character;
-        }
-
-        final Token token = new Token(buffer);
-
-        switch (status){
-            case 2:
-                final TokenType tokenType = reservedWords.get(buffer);
-                if(tokenType!=null) return token.withType(tokenType);
-                return token.withType(TokenType.ID);
-            case 4:
-                token.withType(TokenType.CONSTANT); break;
-            case 5:
-                token.withType(TokenType.ADD_OP); break;
-            case 6:
-                token.withType(TokenType.SUB_OP); break;
-            case 7:
-                token.withType(TokenType.LEFT_PARENT); break;
-            case 8:
-                token.withType(TokenType.RIGHT_PARENT); break;
-            case 9:
-                token.withType(TokenType.COMMA); break;
-            case 10:
-                token.withType(TokenType.SEMICOLON); break;
-            case 12:
-                token.withType(TokenType.ASSIGN); break;
-            case 13:
-                token.withType(TokenType.EOF); break;
-            default:
-                token.withType(TokenType.LEXICAL_ERROR); break;
-        }
-        return token;
-    }
-*/
     private int nextStatus(int status, @Nullable Character character){
         final int column;
         if(character==null) column = 12;
@@ -190,4 +162,7 @@ public class Scanner {
     private boolean isIgnoredChar(Character c){
         return c != null && (c==' ' || c=='\t' || c=='\n');
     }
+
+    private static final String SCANNER_OK = "No se detectaron erores léxicos";
+    private static final String SCANNER_ERROR = "Se detectaron errores léxicos: %s";
 }

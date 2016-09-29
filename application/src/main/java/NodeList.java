@@ -1,10 +1,12 @@
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NodeList<T> {
-    private ArrayList<T> nodeList = new ArrayList<>();
-    private int currentIndex = 0;
+
+    private List<T> nodeList = new ArrayList<>();
+    private int currentIndex = -1;
 
     public void add(T t) {
         nodeList.add(t);
@@ -40,11 +42,17 @@ public class NodeList<T> {
 
     public static NodeList<Character> fromCharArray(char... chars){
         NodeList<Character> list = new NodeList<>();
-        list.add('\0');
         for (char c : chars) {
             list.add(c);
         }
         list.add('\0');
         return list;
     }
+
+    public List<T> list() {
+        return nodeList;
+    }
+
+
+    //    public static NodeList<Character> fromList()
 }

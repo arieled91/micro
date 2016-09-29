@@ -22,13 +22,6 @@ public class Token {
     }
 
 
-    public void match(TokenType matchType){
-        if(getTokenType()!=matchType) {
-            syntacticError();
-            //exit?
-        }
-    }
-
     public void syntacticError(){
         System.err.println(String.format(SYNTACTIC_ERROR, getValue()));
     }
