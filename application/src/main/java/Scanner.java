@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Scanner {
 
-    private final char[] chars;
+    NodeList<Character> chars;
     private final Map<String, TokenType> reservedWords = new HashMap<>();
     private final List<Token> tokens = new LinkedList<>();
     private final ListIterator<Token> tokensIterator = tokens.listIterator();
@@ -32,7 +32,8 @@ public class Scanner {
             { 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14 }};
 
     public Scanner(String filePath) {
-        chars = FileUtil.read(filePath).toCharArray();
+        char[] fileChars = FileUtil.read(filePath).toCharArray();
+        chars = NodeList.fromCharArray(fileChars);
         loadReservedWords();
         buildTokens();
     }
@@ -80,17 +81,38 @@ public class Scanner {
         String buffer = "";
         int status = 0;
 
-        for (final char character : chars) {
-            final int nextStatus = nextStatus(status, character);
-            if(nextStatus==14) {
+        while (chars.next()!=null) {
+            if(isFinalStatus(status)) {
                 tokens.add(buildToken(status, buffer));
                 buffer = "";
                 status = 0;
+            }
+            Character character = chars.get();
+            status = nextStatus(status, character);
+            if(!isIgnoredChar(character)) buffer+=character;
+        }
+    }
+/*
+   private void buildTokens(){
+        String buffer = "";
+        int status = 0;
+
+        for (final char character : chars) {
+            status = nextStatus(status, character);
+            if(isFinalStatus(status)) {
+                tokens.add(buildToken(status, buffer));
+                boolean ignoredChar = isIgnoredChar(character);
+                buffer = ignoredChar ? "" : ""+character;
+                status = ignoredChar ? 0 : nextStatus(0,character);
             }else{
-                status = nextStatus;
                 buffer+=character;
             }
         }
+    }
+*/
+
+    private boolean isFinalStatus(int s){
+        return s==2 || s==4 || s==5 || s==6 || s==7 || s==8 || s==9 || s==10 || s==12 || s==13 || s==14;
     }
 
     private Token buildToken(int status, String buffer){
@@ -100,6 +122,7 @@ public class Scanner {
                 final TokenType tokenType = reservedWords.get(buffer);
                 if (tokenType != null) token.withType(tokenType);
                 else token.withType(TokenType.ID);
+                break;
             case 4:
                 token.withType(TokenType.CONSTANT);
                 break;
@@ -195,8 +218,12 @@ public class Scanner {
         else if(character == ';') column = 7;
         else if(character == ':') column = 8;
         else if(character == '=') column = 9;
-        else if(character == ' ' || character== '\t' || character== '\n') column = 11;
+        else if(isIgnoredChar(character)) column = 11;
         else column = 12;
         return statusTable[status][column];
+    }
+
+    private boolean isIgnoredChar(Character c){
+        return c != null && (c==' ' || c=='\t' || c=='\n');
     }
 }
