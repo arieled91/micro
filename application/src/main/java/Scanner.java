@@ -63,7 +63,7 @@ public class Scanner {
             Character character = chars.get();
             status = nextStatus(status, character);
             if(isFinalStatus(status)) {
-                if(buffer.length()==0) buffer+=character;
+                if(status!=2 && status!=4)buffer+=character;
                 else chars.previous();
                 tokens.add(buildToken(status, buffer));
                 buffer = "";

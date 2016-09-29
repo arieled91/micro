@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class NodeList<T> {
     private ArrayList<T> nodeList = new ArrayList<>();
-    private int currentIndex = -1;
+    private int currentIndex = 0;
 
     public void add(T t) {
         nodeList.add(t);
@@ -40,6 +40,7 @@ public class NodeList<T> {
 
     public static NodeList<Character> fromCharArray(char... chars){
         NodeList<Character> list = new NodeList<>();
+        list.add('\0');
         for (char c : chars) {
             list.add(c);
         }
