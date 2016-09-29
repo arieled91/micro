@@ -55,61 +55,24 @@ public class Scanner {
         else return new Token();
     }
 
-
-    /*@Nullable private Character nextValue(){
-        if(bufferIndex+1> fileBuffer.length()) return null;
-        return fileBuffer.charAt(bufferIndex++);
-    }*/
-
-    /*private boolean isNextStatusOk(int status){
-        if(bufferIndex+1> fileBuffer.length()) return false;
-        final char value = fileBuffer.charAt(bufferIndex + 1);
-        return nextStatus(status, value)!=14;
-    }*/
-
-    /*private void buildTokens(){
-        Token token = new Token();
-        while (token.getTokenType()!=TokenType.EOF){
-            token = nextToken();
-            if(token.getTokenType()==TokenType.LEXICAL_ERROR){
-                token.lexicalError();
-            }else tokens.add(token);
-        }
-    }*/
-
     private void buildTokens(){
         String buffer = "";
         int status = 0;
 
         while (chars.next()!=null) {
+            Character character = chars.get();
+            status = nextStatus(status, character);
             if(isFinalStatus(status)) {
+                if(buffer.length()==0) buffer+=character;
+                else chars.previous();
                 tokens.add(buildToken(status, buffer));
                 buffer = "";
                 status = 0;
-            }
-            Character character = chars.get();
-            status = nextStatus(status, character);
-            if(!isIgnoredChar(character)) buffer+=character;
-        }
-    }
-/*
-   private void buildTokens(){
-        String buffer = "";
-        int status = 0;
-
-        for (final char character : chars) {
-            status = nextStatus(status, character);
-            if(isFinalStatus(status)) {
-                tokens.add(buildToken(status, buffer));
-                boolean ignoredChar = isIgnoredChar(character);
-                buffer = ignoredChar ? "" : ""+character;
-                status = ignoredChar ? 0 : nextStatus(0,character);
-            }else{
-                buffer+=character;
+            }else {
+                if (!isIgnoredChar(character)) buffer += character;
             }
         }
     }
-*/
 
     private boolean isFinalStatus(int s){
         return s==2 || s==4 || s==5 || s==6 || s==7 || s==8 || s==9 || s==10 || s==12 || s==13 || s==14;
@@ -207,7 +170,8 @@ public class Scanner {
 */
     private int nextStatus(int status, @Nullable Character character){
         final int column;
-        if(character==null) column = 10;
+        if(character==null) column = 12;
+        else if(character=='\0') column = 10;
         else if(Character.isAlphabetic(character)) column = 0;
         else if(Character.isDigit(character)) column = 1;
         else if(character == '+') column = 2;

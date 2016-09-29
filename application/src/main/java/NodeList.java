@@ -43,6 +43,7 @@ public class NodeList<T> {
         for (char c : chars) {
             list.add(c);
         }
+        list.add('\0');
         return list;
     }
 }

@@ -1,3 +1,3 @@
 begin
-read(a,b);
+read(a,b,*);
 end
