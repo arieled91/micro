@@ -21,7 +21,6 @@ public class Token {
         return value;
     }
 
-
     public void syntacticError(){
         System.err.println(String.format(SYNTACTIC_ERROR, getValue()));
     }
@@ -29,8 +28,6 @@ public class Token {
     public void lexicalError(){
         System.err.println(String.format(LEXICAL_ERROR, getValue()));
     }
-
-
 
     private static final String SYNTACTIC_ERROR = "Error sintáctico: %s";
     private static final String LEXICAL_ERROR = "Error léxico: %s";

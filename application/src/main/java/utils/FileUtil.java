@@ -1,3 +1,5 @@
+package utils;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -20,5 +22,4 @@ public class FileUtil {
     }
 
     private static final String FILE_NOT_FOUND = "Error de E/S o archivo no encontrado: \"%s\"";
-
 }

@@ -20,9 +20,7 @@ public class App {
             System.exit(22);
         }
 
-
-
-        final Parser parser = new Parser(filePath).run();
+        new Parser(filePath).run();
     }
 
     private static final String FILE_PATH_ERROR = "Debe ingresar la ruta de un archivo";

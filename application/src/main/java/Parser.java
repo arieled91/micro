@@ -30,8 +30,6 @@ public class Parser {
         return true;
     }
 
-
-
     private void listOfStatements() {
         statement();
         while (true){
@@ -60,8 +58,6 @@ public class Parser {
         }
     }
 
-
-
     private void listOfIdentifiers(){
         identifier();
         while(true){
@@ -73,7 +69,6 @@ public class Parser {
             identifier();
         }
     }
-
 
     private void statement() {
         final TokenType tokenType = scanner.next().getTokenType();
@@ -132,7 +127,6 @@ public class Parser {
                 break;
         }
     }
-
 
     private void identifier(){
         scanner.next();

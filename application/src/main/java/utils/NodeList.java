@@ -1,3 +1,5 @@
+package utils;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class NodeList<T> {
         }
         return null;
     }
+
     @Nullable public T previous() {
         if(hasPrevious()) {
             currentIndex--;
@@ -52,7 +55,4 @@ public class NodeList<T> {
     public List<T> list() {
         return nodeList;
     }
-
-
-    //    public static NodeList<Character> fromList()
 }
