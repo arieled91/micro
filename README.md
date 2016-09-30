@@ -1,8 +1,8 @@
 ## Micro es un complilador para el lenguaje de programacion Micro
 
 ### DESCRIPCIÓN
-Fischer presenta un LP que denomina Micro. Es un lenguaje muy simple que está diseñado,
-específicamente, para poseer un LP concreto sobre el que se pueda analizar la construcción de un
+Fischer presenta un lenguaje de programación que denomina Micro. Es un lenguaje muy simple que está diseñado,
+específicamente, para poseer un lenguaje de programación concreto sobre el que se pueda analizar la construcción de un
 compilador básico.
 Informalmente, Fischer lo define de esta manera:
 
