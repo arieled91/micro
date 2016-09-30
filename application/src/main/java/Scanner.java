@@ -104,6 +104,7 @@ public class Scanner {
             case 2:
                 final TokenType tokenType = reservedWords.get(buffer);
                 if (tokenType != null) token.withType(tokenType);
+                else if(buffer.length()>32) token.withType(TokenType.LEXICAL_ERROR);
                 else token.withType(TokenType.ID);
                 break;
             case 4:
@@ -157,6 +158,10 @@ public class Scanner {
         else if(isIgnoredChar(character)) column = 11;
         else column = 12;
         return statusTable[status][column];
+    }
+
+    public NodeList<Token> getTokens() {
+        return tokens;
     }
 
     private boolean isIgnoredChar(Character c){

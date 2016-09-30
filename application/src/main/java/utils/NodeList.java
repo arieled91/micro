@@ -3,9 +3,10 @@ package utils;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class NodeList<T> {
+public class NodeList<T> implements Iterable<T>{
 
     private List<T> nodeList = new ArrayList<>();
     private int currentIndex = -1;
@@ -54,5 +55,14 @@ public class NodeList<T> {
 
     public List<T> list() {
         return nodeList;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return nodeList.iterator();
+    }
+
+    public void resetIndex(){
+        currentIndex = -1;
     }
 }

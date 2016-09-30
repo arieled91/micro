@@ -1,9 +1,14 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Parser {
 
     private final Scanner scanner;
-
+    private final Map<String, String> idMap = new HashMap<>();
+    private final String filePath;
 
     public Parser (String filePath){
+        this.filePath = filePath;
         scanner = new Scanner(filePath);
     }
 
@@ -16,7 +21,12 @@ public class Parser {
         scanner.next();
         match(TokenType.EOF);
         System.out.println(PARSER_OK);
+        writeJavaClass();
         return this;
+    }
+
+    private void writeJavaClass() {
+        new JavaWriter(filePath, scanner.getTokens()).write();
     }
 
 
@@ -59,21 +69,27 @@ public class Parser {
     }
 
     private void listOfIdentifiers(){
-        identifier();
+        scanner.next();
+        match(TokenType.ID);
+        declareId();
         while(true){
             final Token token = scanner.next();
             if(token.getTokenType()!=TokenType.COMMA){
                 scanner.previous();
                 return;
             }
-            identifier();
+            scanner.next();
+            match(TokenType.ID);
+            declareId();
         }
     }
+
 
     private void statement() {
         final TokenType tokenType = scanner.next().getTokenType();
         switch (tokenType){
             case ID:
+                declareId();
                 scanner.next();
                 match(TokenType.ASSIGN);
                 expression();
@@ -115,7 +131,10 @@ public class Parser {
         final TokenType tokenType = token.getTokenType();
 
         switch (tokenType){
-            case ID: case CONSTANT:
+            case ID:
+                checkId();
+                break;
+            case CONSTANT:
                 break;
             case LEFT_PARENT:
                 expression();
@@ -128,11 +147,22 @@ public class Parser {
         }
     }
 
-    private void identifier(){
-        scanner.next();
-        match(TokenType.ID);
-        //procesar id
+    private void declareId(){
+        Token token = scanner.get();
+        if(token.getTokenType()==TokenType.ID){
+            idMap.put(token.getValue(), token.getValue());
+        }
+    }
+
+    private void checkId(){
+        Token token = scanner.get();
+        if(!idMap.containsKey(token.getValue())){
+            System.err.printf(ID_ERROR, token.getValue());
+            System.exit(1);
+        }
     }
 
     private static final String PARSER_OK = "No se detectaron errores sintacticos";
+    private static final String ID_ERROR = "El identificador \"%s\" no fue declarado\n";
+
 }

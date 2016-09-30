@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.NotNull;
+
 public class Token {
     private TokenType tokenType = TokenType.OTHER;
     private String value = "";
@@ -8,7 +10,7 @@ public class Token {
         this.value = value;
     }
 
-    public TokenType getTokenType() {
+    @NotNull public TokenType getTokenType() {
         return tokenType;
     }
 
@@ -17,7 +19,7 @@ public class Token {
         return this;
     }
 
-    public String getValue() {
+    @NotNull public String getValue() {
         return value;
     }
 
