@@ -1,4 +1,4 @@
-## Micro es un complilador para el lenguaje de programacion Micro
+## Micro es un compilador para el lenguaje de programacion Micro
 
 ### DESCRIPCIÓN
 Fischer presenta un lenguaje de programación que denomina Micro. Es un lenguaje muy simple que está diseñado,
@@ -36,7 +36,7 @@ escribirse en minúscula.
 <letra o dígito> -> uno de <letra> <dígito>
 <letra> -> una de a-z A-Z
 <dígito> -> uno de 0-9
-<palabraReservada> -> una de inicio fin leer escribir
+<palabraReservada> -> una de begin end read write
 <operadorAditivo> -> uno de + -
 <asignación> -> :=
 <carácterPuntuación> -> uno de ( ) , ;
