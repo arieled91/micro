@@ -1,4 +1,4 @@
-# Micro es un complilador para el lenguaje de programacion Micro
+## Micro es un complilador para el lenguaje de programacion Micro
 
 ## DESCRIPCIÓN INFORMAL DEL LENGUAJE DE PROGRAMACIÓN MICRO
 Fischer presenta un LP que denomina Micro. Es un lenguaje muy simple que está diseñado,
@@ -61,8 +61,8 @@ begin
   b := b-1;
   write(a,b);
 end
-
-
+```
+```
 begin
   read (a,b);
   cc := a + (b-2);
