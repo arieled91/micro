@@ -51,8 +51,6 @@ public class Scanner {
         }
 
         if(errorCounter==0) System.out.println(SCANNER_OK);
-        else System.err.println(String.format(SCANNER_ERROR, errorCounter));
-
     }
 
     private void loadReservedWords(){
@@ -166,5 +164,4 @@ public class Scanner {
     }
 
     private static final String SCANNER_OK = "No se detectaron erores léxicos";
-    private static final String SCANNER_ERROR = "Se detectaron errores léxicos: %s";
 }
