@@ -28,6 +28,7 @@ programa está delimitado por begin y end.
 escribirse en minúscula.
 
 ## Gramática Léxica
+```
 <token> -> uno de <identificador> <constante> <palabraReservada>
           <operadorAditivo> <asignación> <carácterPuntuación>
 <identificador> -> <letra> {<letra o dígito>}
@@ -39,8 +40,9 @@ escribirse en minúscula.
 <operadorAditivo> -> uno de + -
 <asignación> -> :=
 <carácterPuntuación> -> uno de ( ) , ;
-
+```
 ## Gramática Sintáctica
+```
 <programa> -> inicio <listaSentencias> fin
 <listaSentencias> -> <sentencia> {<sentencia>}
 <sentencia> -> <identificador> := <expresión> ; |
@@ -51,7 +53,7 @@ escribirse en minúscula.
 <expresión> -> <primaria> {<operadorAditivo> <primaria>}
 <primaria> -> <identificador> | <constante> |
               ( <expresión> )
-
+```
 
 ### Ejemplos:
 ```
