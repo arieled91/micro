@@ -1,6 +1,6 @@
-## Micro es un complilador para el lenguaje de programacion Micro
+# Micro es un complilador para el lenguaje de programacion Micro
 
-# DESCRIPCIÓN INFORMAL DEL LENGUAJE DE PROGRAMACIÓN MICRO
+## DESCRIPCIÓN INFORMAL DEL LENGUAJE DE PROGRAMACIÓN MICRO
 Fischer presenta un LP que denomina Micro. Es un lenguaje muy simple que está diseñado,
 específicamente, para poseer un LP concreto sobre el que se pueda analizar la construcción de un
 compilador básico.
@@ -27,7 +27,7 @@ programa está delimitado por begin y end.
 - begin, end, read y write son palabras reservadas y deben
 escribirse en minúscula.
 
-# Gramática Léxica
+## Gramática Léxica
 <token> -> uno de <identificador> <constante> <palabraReservada>
           <operadorAditivo> <asignación> <carácterPuntuación>
 <identificador> -> <letra> {<letra o dígito>}
@@ -40,7 +40,7 @@ escribirse en minúscula.
 <asignación> -> :=
 <carácterPuntuación> -> uno de ( ) , ;
 
-#Gramática Sintáctica
+## Gramática Sintáctica
 <programa> -> inicio <listaSentencias> fin
 <listaSentencias> -> <sentencia> {<sentencia>}
 <sentencia> -> <identificador> := <expresión> ; |
@@ -53,8 +53,8 @@ escribirse en minúscula.
               ( <expresión> )
 
 
-Ejemplos:
-
+### Ejemplos:
+```
 begin
   read(a,b);
   a := a+11;
@@ -68,3 +68,4 @@ begin
   cc := a + (b-2);
   write (cc, a+4);
 end
+```
