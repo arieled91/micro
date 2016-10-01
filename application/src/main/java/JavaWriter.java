@@ -58,11 +58,11 @@ public class JavaWriter {
 
     private List<String> buildFile(){
         List<String> file = new ArrayList<>();
+        final Set<String> idMap = new HashSet<>();
         while (tokens.next()!=null) {
             Token token = tokens.get();
             if(token==null) break;
             TokenType tokenType = token.getTokenType();
-            final Set<String> idMap = new HashSet<>();
 
             switch (tokenType){
                 case BEGIN:
@@ -102,8 +102,10 @@ public class JavaWriter {
                     String stateBuffer = "\t\t";
                     Token id = tokens.get();
                     if (id == null) break;
-                    if(!idMap.contains(id.getValue()))
-                        stateBuffer+="int ";
+                    if(!idMap.contains(id.getValue())) {
+                        stateBuffer += "int ";
+                        idMap.add(id.getValue());
+                    }
                     stateBuffer+=id.getValue() + " = ";
                     tokens.next(); //skip :=
                     while (tokens.next().getTokenType()!=TokenType.SEMICOLON){
