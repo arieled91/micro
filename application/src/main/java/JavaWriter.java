@@ -70,9 +70,10 @@ public class JavaWriter {
                     do {
                         Token id = tokens.next();
                         if (id == null) break;
-                        idMap.add(id.getValue());
                         file.add(String.format("\t\tSystem.out.println(\"Ingrese %s: \");", id.getValue()));
-                        file.add(String.format("\t\tint %s = read.nextInt();", id.getValue()));
+                        String declare = idMap.contains(id.getValue()) ? "" : "int ";
+                        file.add(String.format("\t\t"+declare+"%s = read.nextInt();", id.getValue()));
+                        idMap.add(id.getValue());
                     }while (tokens.next().getTokenType()!=TokenType.RIGHT_PARENT);
                     tokens.next(); //semicolon
                     break;
