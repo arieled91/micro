@@ -1,3 +1,4 @@
+import utils.FileUtil;
 import utils.NodeList;
 
 import java.io.File;
@@ -33,25 +34,17 @@ public class JavaWriter {
     public void write(){
         String targetPath = buildClassName(originPath, true);
         List<String> file = buildFile();
-        try {
-            Files.write(Paths.get(targetPath), file, Charset.forName("UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        FileUtil.write(targetPath,file);
     }
 
     public String buildClassName(String originPath, boolean fullPath){
         String[] pathSplit = originPath.split(File.separator);
-        String name = pathSplit[pathSplit.length - 1].replace(".m","");
+        String file = pathSplit[pathSplit.length - 1];
+        String name = file.replace(".m","");
         String camelcase = name.substring(0, 1).toUpperCase() + name.substring(1); //to camelcase
         if(fullPath){
             pathSplit[pathSplit.length - 1] = camelcase;
-            String newPath = "";
-            for (String split : pathSplit) {
-                newPath+=split;
-            }
-            return newPath+".java";
+            return originPath.substring(0,originPath.length()-file.length())+camelcase+".java";
         }
         return camelcase;
     }
