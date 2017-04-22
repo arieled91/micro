@@ -1,4 +1,4 @@
-## Micro es un compilador para el lenguaje de programacion Micro
+## Micro Compiler es un compilador para el lenguaje de programacion Micro
 
 ### DESCRIPCIÓN
 Fischer presenta un lenguaje de programación que denomina Micro. Es un lenguaje muy simple que está diseñado,
